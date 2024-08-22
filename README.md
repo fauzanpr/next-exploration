@@ -1,7 +1,5 @@
-## Tech Exploration
-This is the repo for exploring some tech stack, such as Next JS, Ant Design, Dynamic Form, Zod, and Typescript
-<br />
-<u>Soon will build some project using them.</u>
-
-### Please Stay Tune :) xixixi
-kalo kata orang orang, made with love and passion 🗿
+## This branch is Different
+I use this branch to explore some concept of data fetching in Next JS, such as 
+- SSR (on src/app/posts/[postId]/page.tsx)
+- SSG (on src/app/posts/page.tsx)
+- ISR
