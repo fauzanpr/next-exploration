@@ -1,12 +1,9 @@
 "use client"
 
 import React, { useState } from 'react';
-import Layout, { Content, Footer, Header } from 'antd/es/layout/layout';
-import { Button, Flex, Modal, Space } from 'antd';
+import { Col, Flex, Modal, Row, Space } from 'antd';
 import Title from 'antd/es/typography/Title';
 import Paragraph from "antd/es/typography/Paragraph";
-import Text from "antd/es/typography/Text";
-import Link from 'next/link';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const Page = () => {
@@ -38,30 +35,33 @@ const Page = () => {
           }}>Promptopia</span> is an innovative platform designed to save and manage your creative prompts. With Promptopia, you can easily store, organize, and access your collection of prompts, whether for writing, design, development, or other creative activities. The platform ensures that your creative inspirations are always organized in one place, making them readily available whenever you need them. Promptopia helps you keep track of your brilliant ideas, ensuring they are never lost and are always at your fingertips.</Paragraph>
         </Space>
 
-        <Flex gap={24}>
-          {new Array(4).fill(null).map((_, index) => (
-            <Space key={index} direction='vertical' style={{
-              width: "25%",
-              border: "1px solid black",
-              padding: "1rem",
-              borderRadius: "10px",
-              boxShadow: "10px 10px black",
+        <Row gutter={27}>
+          {new Array(8).fill(null).map((_, index) => (
+            <Col key={index} span={8} style={{
+              marginBottom: "27px"
             }}>
-              <Flex justify='space-between' align='center'>
-                <Title level={3} style={{
-                  fontSize: "18px"
-                }}>Promp Title</Title>
-                <DeleteOutlined onClick={deleteButtonHandler} style={{
-                  color: "red",
-                  cursor: "pointer"
-                }} />
-              </Flex>
-              <Paragraph>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, similique amet repellat corrupti, molestiae architecto voluptas consectetur sit labore consequatur magnam doloribus id quam eligendi cupiditate eveniet quis at unde.
-              </Paragraph>
-            </Space>
+              <Space direction='vertical' style={{
+                border: "1px solid black",
+                padding: "1rem",
+                borderRadius: "10px",
+                boxShadow: "10px 10px black",
+              }}>
+                <Flex justify='space-between' align='center'>
+                  <Title level={3} style={{
+                    fontSize: "18px"
+                  }}>Promp Title</Title>
+                  <DeleteOutlined onClick={deleteButtonHandler} style={{
+                    color: "red",
+                    cursor: "pointer"
+                  }} />
+                </Flex>
+                <Paragraph>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, similique amet repellat corrupti, molestiae architecto voluptas consectetur sit labore consequatur magnam doloribus id quam eligendi cupiditate eveniet quis at unde.
+                </Paragraph>
+              </Space>
+            </Col>
           ))}
-        </Flex>
+        </Row>
       </Space>
     </>
   )

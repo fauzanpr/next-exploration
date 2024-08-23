@@ -31,9 +31,11 @@ export default function RootLayout({
             paddingTop: "16px"
           }}>
             <Flex justify='space-between' align='center'>
-              <Title level={2} type='warning' style={{
-                marginBottom: 0,
-              }}>📌 Promptopia</Title>
+              <Link href="/">
+                <Title level={2} type='warning' style={{
+                  marginBottom: 0,
+                }}>📌 Promptopia</Title>
+              </Link>
               <Link href="/add">
                 <Button type="primary">Add Prompt</Button>
               </Link>
@@ -42,7 +44,7 @@ export default function RootLayout({
           <Content style={{
             padding: "48px",
           }}>
-            { children }
+            {children}
           </Content>
           <Footer>
             <Flex justify='center'>

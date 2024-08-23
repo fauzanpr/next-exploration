@@ -1,8 +1,11 @@
+import { Space } from 'antd'
 import React from 'react'
 
 function Page() {
   return (
-    <div>Page</div>
+    <Space>
+        <p>Hello World</p>
+    </Space>
   )
 }
 
