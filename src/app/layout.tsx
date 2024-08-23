@@ -28,7 +28,10 @@ export default function RootLayout({
           <Header style={{
             height: "fit-content",
             paddingBottom: "16px",
-            paddingTop: "16px"
+            paddingTop: "16px",
+            position: "sticky",
+            top: 0,
+            left: 0
           }}>
             <Flex justify='space-between' align='center'>
               <Link href="/">
