@@ -4,12 +4,24 @@ import React from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Typography } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import useSendPromptData from './hooks/useSendPromptData';
+import { PromptsModel } from '@/models/promptModel';
 
 const Page: React.FC = () => {
-    const [form] = Form.useForm();
+    const [form] = Form.useForm<PromptsModel>();
+    const sendPromptData = useSendPromptData();
 
     const onSubmit = () => {
-        console.log(form.getFieldsValue());
+        console.log(form.getFieldsValue().prompts);
+        sendPromptData({
+            title: form.getFieldsValue().title,
+            prompts: form.getFieldsValue().prompts.map((prompt, id) => {
+                return {
+                    id: id + 1,
+                    prompt: prompt.prompt
+                }
+            })
+        });
     }
     return (
         <Form
@@ -25,12 +37,12 @@ const Page: React.FC = () => {
             <Form.Item name={"title"} label="Title">
                 <Input size='large' />
             </Form.Item>
-            <Form.List name="prompt">
+            <Form.List name="prompts">
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(field => (
                             <Card key={field.key} title="Prompt" extra={<CloseOutlined onClick={() => remove(field.name)} />}>
-                                <Form.Item key={field.key} name={[field.name, "name"]} style={{
+                                <Form.Item key={field.key} name={[field.name, "prompt"]} style={{
                                 }}>
                                     <TextArea size='large' rows={5} />
                                 </Form.Item>

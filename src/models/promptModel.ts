@@ -4,7 +4,7 @@ interface SinglePromptModel {
 }
 
 export interface PromptsModel {
-    id: number;
+    id?: number;
     title: string;
     prompts: SinglePromptModel[];
 }

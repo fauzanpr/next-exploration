@@ -64,7 +64,11 @@ const Page = () => {
                   }} />
                 </Flex>
                 {prompt.prompts.map(promptContent => (
-                  <Paragraph key={promptContent.id}>
+                  <Paragraph copyable key={promptContent.id} style={{
+                    border: "1px solid gray",
+                    padding: 10,
+                    borderRadius: 10
+                  }}>
                     {promptContent.prompt}
                   </Paragraph>
                 ))}
