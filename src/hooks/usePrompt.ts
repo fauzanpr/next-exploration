@@ -18,8 +18,15 @@ function usePrompt() {
         })
     };
 
+    const deletePromptData = (id: number) => {
+        setPromptsAtom(prev => {
+            return prev.filter(data => data.id !== id);
+        });
+    }
+
     return {
-        sendPromptData
+        sendPromptData,
+        deletePromptData
     };
 }
 

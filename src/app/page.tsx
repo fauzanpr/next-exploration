@@ -7,15 +7,20 @@ import Paragraph from "antd/es/typography/Paragraph";
 import { DeleteOutlined } from '@ant-design/icons';
 import { useAtomValue } from 'jotai';
 import { PromptsAtom } from '@/data';
+import usePrompt from '@/hooks/usePrompt';
 
 const Page = () => {
   const prompts = useAtomValue(PromptsAtom);
   const [isModalDeleteOpen, setIsOpenModalDeleteOpen] = useState(false);
-  const deleteButtonHandler = () => {
+  const [idDeleted, setIdDeleted] = useState<number>(-1);
+  const { deletePromptData } = usePrompt();
+  const deleteButtonHandler = (id: number) => {
     setIsOpenModalDeleteOpen(true);
+    setIdDeleted(id);
   }
   const handleOk = () => {
     setIsOpenModalDeleteOpen(false);
+    deletePromptData(idDeleted);
   }
   const handleCancel = () => {
     setIsOpenModalDeleteOpen(false);
@@ -58,7 +63,7 @@ const Page = () => {
                   <Title level={3} style={{
                     fontSize: "18px"
                   }}>{prompt.title}</Title>
-                  <DeleteOutlined onClick={deleteButtonHandler} style={{
+                  <DeleteOutlined onClick={() => deleteButtonHandler(prompt.id || -1)} style={{
                     color: "red",
                     cursor: "pointer"
                   }} />
