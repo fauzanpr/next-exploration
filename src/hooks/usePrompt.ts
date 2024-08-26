@@ -2,7 +2,7 @@ import { PromptsAtom } from "@/data";
 import { PromptsModel } from "@/models/promptModel";
 import { useAtom } from "jotai";
 
-function useSendPromptData() {
+function usePrompt() {
     const [promptsAtom, setPromptsAtom] = useAtom(PromptsAtom);
 
     const sendPromptData = ({ prompts, title }: PromptsModel) => {
@@ -18,7 +18,9 @@ function useSendPromptData() {
         })
     };
 
-    return sendPromptData;
+    return {
+        sendPromptData
+    };
 }
 
-export default useSendPromptData;
+export default usePrompt;

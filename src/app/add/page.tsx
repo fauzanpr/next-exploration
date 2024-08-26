@@ -4,12 +4,12 @@ import React from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Typography } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import useSendPromptData from './hooks/useSendPromptData';
+import usePrompt from '../../hooks/usePrompt';
 import { PromptsModel } from '@/models/promptModel';
 
 const Page: React.FC = () => {
     const [form] = Form.useForm<PromptsModel>();
-    const sendPromptData = useSendPromptData();
+    const { sendPromptData } = usePrompt();
 
     const onSubmit = () => {
         console.log(form.getFieldsValue().prompts);
