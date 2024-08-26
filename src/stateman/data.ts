@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { PromptsModel } from "./models/promptModel";
+import { PromptsModel } from "../models/promptModel";
 
 export const PromptsAtom = atom<PromptsModel[]>([
     {

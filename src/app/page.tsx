@@ -4,13 +4,16 @@ import React, { useState } from 'react';
 import { Col, Flex, Modal, Row, Space, Tag } from 'antd';
 import Title from 'antd/es/typography/Title';
 import Paragraph from "antd/es/typography/Paragraph";
-import { DeleteOutlined } from '@ant-design/icons';
-import { useAtomValue } from 'jotai';
-import { PromptsAtom } from '@/data';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { PromptsAtom } from '@/stateman/data';
 import usePrompt from '@/hooks/usePrompt';
+import { DetailIdAtom } from '@/stateman/state';
+import Link from 'next/link';
 
 const Page = () => {
   const prompts = useAtomValue(PromptsAtom);
+  const setDetailIdAtom = useSetAtom(DetailIdAtom);
   const [isModalDeleteOpen, setIsOpenModalDeleteOpen] = useState(false);
   const [idDeleted, setIdDeleted] = useState<number>(-1);
   const { deletePromptData } = usePrompt();
@@ -18,6 +21,9 @@ const Page = () => {
     setIsOpenModalDeleteOpen(true);
     setIdDeleted(id);
   }
+  const editButtonHandler = (id: number) => {
+    setDetailIdAtom(id);
+  };
   const handleOk = () => {
     setIsOpenModalDeleteOpen(false);
     deletePromptData(idDeleted);
@@ -63,10 +69,15 @@ const Page = () => {
                   <Title level={3} style={{
                     fontSize: "18px"
                   }}>{prompt.title}</Title>
-                  <DeleteOutlined onClick={() => deleteButtonHandler(prompt.id || -1)} style={{
-                    color: "red",
-                    cursor: "pointer"
-                  }} />
+                  <Space>
+                    <DeleteOutlined onClick={() => deleteButtonHandler(prompt.id || -1)} style={{
+                      color: "red",
+                      cursor: "pointer"
+                    }} />
+                    <Link href="/edit">
+                      <EditOutlined onClick={() => { editButtonHandler(prompt.id || -1) }} />
+                    </Link>
+                  </Space>
                 </Flex>
                 {prompt.prompts.map(promptContent => (
                   <Paragraph copyable key={promptContent.id} style={{

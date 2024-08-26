@@ -1,5 +1,6 @@
 "use client";
 
+import usePrompt from "@/hooks/usePrompt";
 import { PromptsModel } from "@/models/promptModel";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Typography } from "antd";
@@ -7,18 +8,20 @@ import { useEffect } from "react";
 
 function Page() {
     const [form] = Form.useForm<PromptsModel>();
+    const { getPromptDetails } = usePrompt();
     useEffect(() => {
+        const data = getPromptDetails();
         form.setFieldsValue({
-            id: 1,
-            title: "Test Title",
-            prompts: [
-                {
-                    id: 1,
-                    prompt: "Hello Prompt"
-                }
-            ]
+            id: data?.id,
+            title: data?.title,
+            prompts: data ? [...data.prompts] : []
         })
     }, []);
+
+    const onSubmit = () => {
+        console.log(getPromptDetails().id);
+        console.log(form.getFieldsValue());
+    }
     return (
         <Form form={form} style={{
             width: "50%",
@@ -38,7 +41,7 @@ function Page() {
                             </Card>
                         ))}
                         <Button type='dashed' onClick={() => add()} block>Add Item</Button>
-                        <Button type='primary' block>Submit</Button>
+                        <Button type='primary' onClick={onSubmit} block>Submit</Button>
                     </>
                 )}
             </Form.List>

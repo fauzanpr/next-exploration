@@ -1,9 +1,11 @@
-import { PromptsAtom } from "@/data";
+import { PromptsAtom } from "@/stateman/data";
 import { PromptsModel } from "@/models/promptModel";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
+import { DetailIdAtom } from "@/stateman/state";
 
 function usePrompt() {
     const [promptsAtom, setPromptsAtom] = useAtom(PromptsAtom);
+    const detailId = useAtomValue(DetailIdAtom);
 
     const sendPromptData = ({ prompts, title }: PromptsModel) => {
         const lastId = promptsAtom.length;
@@ -24,9 +26,14 @@ function usePrompt() {
         });
     }
 
+    const getPromptDetails = () => {
+        return promptsAtom.filter(data => data.id === detailId)[0];
+    }
+
     return {
         sendPromptData,
-        deletePromptData
+        deletePromptData,
+        getPromptDetails
     };
 }
 
