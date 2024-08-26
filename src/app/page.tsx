@@ -45,7 +45,7 @@ const Page = () => {
         ) : null}
         <Row gutter={27}>
           {prompts.map((prompt) => (
-            <Col key={prompt.id} span={8} style={{
+            <Col key={prompt.id} style={{
               marginBottom: "27px"
             }}>
               <Space direction='vertical' style={{
