@@ -1,12 +1,15 @@
 "use client"
 
 import React, { useState } from 'react';
-import { Col, Flex, Modal, Row, Space } from 'antd';
+import { Col, Flex, Modal, Row, Space, Tag } from 'antd';
 import Title from 'antd/es/typography/Title';
 import Paragraph from "antd/es/typography/Paragraph";
 import { DeleteOutlined } from '@ant-design/icons';
+import { useAtomValue } from 'jotai';
+import { PromptsAtom } from '@/data';
 
 const Page = () => {
+  const prompts = useAtomValue(PromptsAtom);
   const [isModalDeleteOpen, setIsOpenModalDeleteOpen] = useState(false);
   const deleteButtonHandler = () => {
     setIsOpenModalDeleteOpen(true);
@@ -35,9 +38,14 @@ const Page = () => {
           }}>Promptopia</span> is an innovative platform designed to save and manage your creative prompts. With Promptopia, you can easily store, organize, and access your collection of prompts, whether for writing, design, development, or other creative activities. The platform ensures that your creative inspirations are always organized in one place, making them readily available whenever you need them. Promptopia helps you keep track of your brilliant ideas, ensuring they are never lost and are always at your fingertips.</Paragraph>
         </Space>
 
+        {prompts.length === 0 ? (
+          <Flex justify='center'>
+            <Tag color='volcano'>Belum ada prompts yang ditambahkan</Tag>
+          </Flex>
+        ) : null}
         <Row gutter={27}>
-          {new Array(8).fill(null).map((_, index) => (
-            <Col key={index} span={8} style={{
+          {prompts.map((prompt) => (
+            <Col key={prompt.id} span={8} style={{
               marginBottom: "27px"
             }}>
               <Space direction='vertical' style={{
@@ -49,15 +57,17 @@ const Page = () => {
                 <Flex justify='space-between' align='center'>
                   <Title level={3} style={{
                     fontSize: "18px"
-                  }}>Promp Title</Title>
+                  }}>{prompt.title}</Title>
                   <DeleteOutlined onClick={deleteButtonHandler} style={{
                     color: "red",
                     cursor: "pointer"
                   }} />
                 </Flex>
-                <Paragraph>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, similique amet repellat corrupti, molestiae architecto voluptas consectetur sit labore consequatur magnam doloribus id quam eligendi cupiditate eveniet quis at unde.
-                </Paragraph>
+                {prompt.prompts.map(promptContent => (
+                  <Paragraph key={promptContent.id}>
+                    {promptContent.prompt}
+                  </Paragraph>
+                ))}
               </Space>
             </Col>
           ))}
