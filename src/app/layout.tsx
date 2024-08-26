@@ -31,7 +31,8 @@ export default function RootLayout({
             paddingTop: "16px",
             position: "sticky",
             top: 0,
-            left: 0
+            left: 0,
+            zIndex: 999
           }}>
             <Flex justify='space-between' align='center'>
               <Link href="/">
