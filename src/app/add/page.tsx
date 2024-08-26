@@ -1,8 +1,9 @@
 "use client"
 
 import React from 'react';
-import { CloseCircleOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Card, Flex, Form, Input, Space, Typography } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
+import { Button, Card, Form, Input, Typography } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
 
 const Page: React.FC = () => {
     const [form] = Form.useForm();
@@ -15,7 +16,7 @@ const Page: React.FC = () => {
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
             form={form}
-            style={{ 
+            style={{
                 maxWidth: "50%",
                 margin: "auto"
             }}
@@ -31,7 +32,7 @@ const Page: React.FC = () => {
                             <Card key={field.key} title="Prompt" extra={<CloseOutlined onClick={() => remove(field.name)} />}>
                                 <Form.Item key={field.key} name={[field.name, "name"]} style={{
                                 }}>
-                                    <Input size='large' />
+                                    <TextArea size='large' rows={5} />
                                 </Form.Item>
                             </Card>
                         ))}
