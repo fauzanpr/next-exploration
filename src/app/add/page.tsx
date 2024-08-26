@@ -22,6 +22,7 @@ const Page: React.FC = () => {
                 }
             })
         });
+        form.resetFields();
     }
     return (
         <Form
