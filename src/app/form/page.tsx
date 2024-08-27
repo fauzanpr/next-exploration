@@ -86,13 +86,13 @@ function Page() {
                     </>
                 )}
             </Form.List>
-            <Form.Item noStyle shouldUpdate>
+            {/* <Form.Item noStyle shouldUpdate>
                 {() => (
                     <Typography>
                         <pre>{JSON.stringify(form.getFieldsValue(), null, 2)}</pre>
                     </Typography>
                 )}
-            </Form.Item>
+            </Form.Item> */}
         </Form>
     )
 }
