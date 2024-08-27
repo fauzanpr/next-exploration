@@ -25,7 +25,9 @@ function Page() {
         } else {
             return {
                 id: -1,
-                prompt: [],
+                prompts: [
+                    null
+                ],
                 title: ""
             }
         }
