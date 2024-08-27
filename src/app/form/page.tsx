@@ -5,9 +5,11 @@ import { PromptsModel } from "@/models/promptModel";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Typography } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { useRouter } from "next/navigation";
 
 function Page() {
     const [form] = Form.useForm<PromptsModel>();
+    const router = useRouter();
     const { getPromptDetails, updatePromptData, sendPromptData } = usePrompt();
     const data = getPromptDetails();
 
@@ -59,6 +61,7 @@ function Page() {
     const onSubmit = () => {
         if (isUpdate()) {
             update();
+            router.push("/");
         } else {
             create();
         }
