@@ -46,16 +46,18 @@ function Page() {
     }
 
     const create = () => {
-        sendPromptData({
-            title: form.getFieldsValue().title,
-            prompts: form.getFieldsValue().prompts.map((prompt, id) => {
-                return {
-                    id: id + 1,
-                    prompt: prompt.prompt
-                }
-            })
-        });
-        form.resetFields();
+        if (form.getFieldsValue().title && form.getFieldsValue().prompts.length > 1) {
+            sendPromptData({
+                title: form.getFieldsValue().title,
+                prompts: form.getFieldsValue().prompts.map((prompt, id) => {
+                    return {
+                        id: id + 1,
+                        prompt: prompt?.prompt
+                    }
+                })
+            });
+            form.resetFields();
+        }
     }
 
     const onSubmit = () => {
@@ -71,21 +73,42 @@ function Page() {
             width: "50%",
             margin: "auto"
         }}>
-            <Form.Item label="Title" name="title">
+            <Form.Item label="Title" name="title" rules={[
+                {
+                    required: true,
+                    message: "Title harus ada ea brok"
+                }
+            ]}>
                 <Input size="large" />
             </Form.Item>
-            <Form.List name="prompts">
-                {(fields, { add, remove }) => (
+            <Form.List name="prompts" rules={[
+                {
+                    validator: async (_, prompts) => {
+                        if (prompts.length < 1) {
+                            return Promise.reject(new Error("Enter minimum satu"))
+                        }
+                    }
+                }
+            ]}>
+                {(fields, { add, remove }, { errors }) => (
                     <>
                         {fields.map(field => (
                             <Card key={field.key} title="Prompt" extra={<CloseOutlined onClick={() => remove(field.name)} />}>
-                                <Form.Item name={[field.name, "prompt"]}>
+                                <Form.Item name={[field.name, "prompt"]} rules={[
+                                    {
+                                        required: true,
+                                        message: "Tidak boleh kosong ya Lek"
+                                    }
+                                ]}>
                                     <TextArea size="large" />
                                 </Form.Item>
                             </Card>
                         ))}
                         <Button type='dashed' onClick={() => add()} block>Add Item</Button>
-                        <Button type='primary' onClick={onSubmit} block>{isUpdate() ? "Update" : "Submit"}</Button>
+                        <Form.Item>
+                            <Button type='primary' htmlType="submit" onClick={onSubmit} block>{isUpdate() ? "Update" : "Submit"}</Button>
+                            <Form.ErrorList errors={errors} />
+                        </Form.Item>
                     </>
                 )}
             </Form.List>
