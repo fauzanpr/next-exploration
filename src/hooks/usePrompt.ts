@@ -30,10 +30,23 @@ function usePrompt() {
         return promptsAtom.filter(data => data.id === detailId)[0];
     }
 
+    const updatePromptData = ({ updatedPrompt }: { updatedPrompt: PromptsModel }) => {
+        setPromptsAtom(prev => {
+            const left = prev.filter(data => data.id ? data.id < detailId : false);
+            const right = prev.filter(data => data.id ? data.id > detailId : false);
+            return [
+                ...left,
+                updatedPrompt,
+                ...right
+            ]
+        });
+    };
+
     return {
         sendPromptData,
         deletePromptData,
-        getPromptDetails
+        getPromptDetails,
+        updatePromptData
     };
 }
 

@@ -8,19 +8,24 @@ import { useEffect } from "react";
 
 function Page() {
     const [form] = Form.useForm<PromptsModel>();
-    const { getPromptDetails } = usePrompt();
+    const { getPromptDetails, updatePromptData } = usePrompt();
+    const data = getPromptDetails();
     useEffect(() => {
-        const data = getPromptDetails();
         form.setFieldsValue({
             id: data?.id,
             title: data?.title,
             prompts: data ? [...data.prompts] : []
         })
-    }, []);
+    }, [data, form, getPromptDetails]);
 
     const onSubmit = () => {
-        console.log(getPromptDetails().id);
-        console.log(form.getFieldsValue());
+        updatePromptData({
+            updatedPrompt: {
+                id: data.id,
+                prompts: form.getFieldsValue().prompts,
+                title: form.getFieldsValue().title
+            }
+        });
     }
     return (
         <Form form={form} style={{
