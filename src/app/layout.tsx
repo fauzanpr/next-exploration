@@ -40,7 +40,7 @@ export default function RootLayout({
                   marginBottom: 0,
                 }}>📌 Promptopia</Title>
               </Link>
-              <Link href="/add">
+              <Link href="/form">
                 <Button type="primary">Add Prompt</Button>
               </Link>
             </Flex>

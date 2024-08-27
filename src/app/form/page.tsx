@@ -4,21 +4,34 @@ import usePrompt from "@/hooks/usePrompt";
 import { PromptsModel } from "@/models/promptModel";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Typography } from "antd";
-import { useEffect } from "react";
+import TextArea from "antd/es/input/TextArea";
 
 function Page() {
     const [form] = Form.useForm<PromptsModel>();
-    const { getPromptDetails, updatePromptData } = usePrompt();
+    const { getPromptDetails, updatePromptData, sendPromptData } = usePrompt();
     const data = getPromptDetails();
-    useEffect(() => {
-        form.setFieldsValue({
-            id: data?.id,
-            title: data?.title,
-            prompts: data ? [...data.prompts] : []
-        })
-    }, [data, form, getPromptDetails]);
 
-    const onSubmit = () => {
+    const isUpdate = () => {
+        return data ? true : false;
+    }
+
+    const getInitialValue = () => {
+        if (isUpdate()) {
+            return {
+                id: data.id,
+                prompts: data.prompts,
+                title: data.title
+            }
+        } else {
+            return {
+                id: -1,
+                prompt: [],
+                title: ""
+            }
+        }
+    }
+
+    const update = () => {
         updatePromptData({
             updatedPrompt: {
                 id: data.id,
@@ -27,8 +40,29 @@ function Page() {
             }
         });
     }
+
+    const create = () => {
+        sendPromptData({
+            title: form.getFieldsValue().title,
+            prompts: form.getFieldsValue().prompts.map((prompt, id) => {
+                return {
+                    id: id + 1,
+                    prompt: prompt.prompt
+                }
+            })
+        });
+        form.resetFields();
+    }
+
+    const onSubmit = () => {
+        if (isUpdate()) {
+            update();
+        } else {
+            create();
+        }
+    }
     return (
-        <Form form={form} style={{
+        <Form form={form} initialValues={getInitialValue()} style={{
             width: "50%",
             margin: "auto"
         }}>
@@ -41,12 +75,12 @@ function Page() {
                         {fields.map(field => (
                             <Card key={field.key} title="Prompt" extra={<CloseOutlined onClick={() => remove(field.name)} />}>
                                 <Form.Item name={[field.name, "prompt"]}>
-                                    <Input size="large" />
+                                    <TextArea size="large" />
                                 </Form.Item>
                             </Card>
                         ))}
                         <Button type='dashed' onClick={() => add()} block>Add Item</Button>
-                        <Button type='primary' onClick={onSubmit} block>Submit</Button>
+                        <Button type='primary' onClick={onSubmit} block>{isUpdate() ? "Update" : "Submit"}</Button>
                     </>
                 )}
             </Form.List>

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Flex, Modal, Row, Space, Tag } from 'antd';
 import Title from 'antd/es/typography/Title';
 import Paragraph from "antd/es/typography/Paragraph";
@@ -17,6 +17,12 @@ const Page = () => {
   const [isModalDeleteOpen, setIsOpenModalDeleteOpen] = useState(false);
   const [idDeleted, setIdDeleted] = useState<number>(-1);
   const { deletePromptData } = usePrompt();
+
+  useEffect(() => {
+    setIdDeleted(-1);
+    setDetailIdAtom(-1);
+  }, [setDetailIdAtom]);
+
   const deleteButtonHandler = (id: number) => {
     setIsOpenModalDeleteOpen(true);
     setIdDeleted(id);
@@ -74,7 +80,7 @@ const Page = () => {
                       color: "red",
                       cursor: "pointer"
                     }} />
-                    <Link href="/edit">
+                    <Link href="/form">
                       <EditOutlined onClick={() => { editButtonHandler(prompt.id || -1) }} />
                     </Link>
                   </Space>
